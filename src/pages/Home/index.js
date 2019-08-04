@@ -2,14 +2,16 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
 
-import { AvatarImage, IconWrapper, Toolbar } from '~/components';
+import {
+  AvatarImage,
+  IconWrapper,
+  Toolbar,
+  TouchableSearchBar,
+} from '~/components';
 import ProfileLogo from '~/assets/alvsdev.jpg';
 import { colors } from '~/styles';
 import {
   Container,
-  SearchBarArea,
-  ContentSearchBar,
-  PlaceholderSearch,
   Trend,
   TrendName,
   TrendPosition,
@@ -33,17 +35,11 @@ function Home({ navigation }) {
       />
       <Toolbar>
         <AvatarImage imgSrc={ProfileLogo} size={36} />
-        <SearchBarArea onPress={() => navigation.navigate('Search')}>
-          <ContentSearchBar>
-            <IconWrapper
-              type="Ionicons"
-              name="ios-search"
-              size={20}
-              color="grey"
-            />
-            <PlaceholderSearch>Search Twitter</PlaceholderSearch>
-          </ContentSearchBar>
-        </SearchBarArea>
+        <TouchableSearchBar
+          title="Search Twitter"
+          textColor="grey"
+          onPress={() => navigation.navigate('Search')}
+        />
         <IconWrapper
           type="SimpleLineIcons"
           name="settings"

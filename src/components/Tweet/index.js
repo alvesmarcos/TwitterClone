@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import AvatarImage from '~/components/AvatarImage';
 import IconWrapper from '~/components/IconWrapper';
-import ProfileLogo from '~/assets/alvsdev.jpg';
 import { colors } from '~/styles';
 import {
   Container,
@@ -17,6 +16,7 @@ import {
 
 const propTypes = {
   name: PropTypes.string.isRequired,
+  imageProfile: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
@@ -33,6 +33,7 @@ const defaultProps = {
 
 function Tweet({
   name,
+  imageProfile,
   username,
   date,
   text,
@@ -42,7 +43,7 @@ function Tweet({
 }) {
   return (
     <Container>
-      <AvatarImage imgSrc={ProfileLogo} size={60} />
+      <AvatarImage imgSrc={imageProfile} size={60} isRemote />
       <Content>
         <ContentRow>
           <Text color="black" weight="bold">

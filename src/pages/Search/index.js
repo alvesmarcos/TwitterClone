@@ -15,6 +15,7 @@ import {
 
 const propTypes = {
   navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
     goBack: PropTypes.func.isRequired,
   }).isRequired,
 };
@@ -29,6 +30,10 @@ function Search({ navigation }) {
       bounciness: 15,
     }).start();
   }, []);
+
+  function handleSearch() {
+    navigation.navigate('Tweets');
+  }
 
   return (
     <Container>
@@ -45,6 +50,8 @@ function Search({ navigation }) {
             onChangeText={value => setText(value)}
             placeholder="Search Twitter"
             selectionColor={colors.accent}
+            onSubmitEditing={handleSearch}
+            autoFocus
           />
           {text.length !== 0 && (
             <RoundButton onPress={() => setText('')}>
