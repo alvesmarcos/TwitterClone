@@ -7,17 +7,6 @@ export const Container = styled.View`
   background-color: ${colors.primaryDark};
 `;
 
-export const Header = styled.View`
-  height: 54px;
-  padding: 4px 16px;
-  background-color: ${colors.primary};
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom-width: 1px;
-  border-bottom-color: ${colors.primaryDark};
-`;
-
 export const SearchBarArea = styled.TouchableWithoutFeedback`
   flex: 1;
 `;

@@ -1,9 +1,9 @@
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 
-import { Home, Timeline } from '~/pages';
+import { Home, Timeline, Search } from '~/pages';
 
 const AppNavigator = createStackNavigator(
-  { Home, Timeline },
+  { Home, Search, Timeline },
   { headerMode: 'none' }
 );
 

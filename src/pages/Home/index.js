@@ -1,12 +1,12 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
+import PropTypes from 'prop-types';
 
-import { AvatarImage, IconWrapper } from '~/components';
+import { AvatarImage, IconWrapper, Toolbar } from '~/components';
 import ProfileLogo from '~/assets/alvsdev.jpg';
 import { colors } from '~/styles';
 import {
   Container,
-  Header,
   SearchBarArea,
   ContentSearchBar,
   PlaceholderSearch,
@@ -18,16 +18,22 @@ import {
   HorizontalSeparator,
 } from './styles';
 
-export default function Home() {
+const propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+function Home({ navigation }) {
   return (
     <Container>
       <StatusBar
         backgroundColor={colors.primaryLight}
         barStyle="dark-content"
       />
-      <Header>
+      <Toolbar>
         <AvatarImage imgSrc={ProfileLogo} size={36} />
-        <SearchBarArea>
+        <SearchBarArea onPress={() => navigation.navigate('Search')}>
           <ContentSearchBar>
             <IconWrapper
               type="Ionicons"
@@ -44,7 +50,7 @@ export default function Home() {
           size={25}
           color={colors.accent}
         />
-      </Header>
+      </Toolbar>
       <Trend>
         <TrendTextHeader>trends</TrendTextHeader>
       </Trend>
@@ -63,3 +69,7 @@ export default function Home() {
     </Container>
   );
 }
+
+Home.propTypes = propTypes;
+
+export default Home;
