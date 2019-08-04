@@ -1,22 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import ProfilePlaceholder from '~/assets/profile-placeholder.jpg';
 import { Container, Image } from './styles';
 
 const propTypes = {
-  imgSrc: PropTypes.number,
+  imgSrc: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   size: PropTypes.number,
+  isRemote: PropTypes.bool,
 };
 
 const defaultProps = {
-  imgSrc: ProfilePlaceholder,
   size: 40,
+  isRemote: false,
 };
 
-const AvatarImage = ({ imgSrc, size }) => (
+const AvatarImage = ({ imgSrc, size, isRemote }) => (
   <Container>
-    <Image source={imgSrc} size={size} />
+    {isRemote ? (
+      <Image source={{ uri: imgSrc }} size={size} />
+    ) : (
+      <Image source={imgSrc} size={size} />
+    )}
   </Container>
 );
 
