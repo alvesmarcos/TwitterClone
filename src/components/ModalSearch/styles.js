@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { Animated } from 'react-native';
+import Modal from 'react-native-modal';
 
 import { colors } from '~/styles';
 
@@ -50,3 +51,7 @@ export const HelperText = styled.Text`
 `;
 
 export const HelperTextAnimated = Animated.createAnimatedComponent(HelperText);
+
+export const CustomModal = styled(Modal)`
+  margin: 0px;
+`;

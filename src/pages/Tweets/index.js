@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { reqGetTweets } from '~/store/modules/tweets/actions';
+import { reqGetTweets, setTweetTopic } from '~/store/modules/tweets/actions';
 import {
   Toolbar,
   TouchableSearchBar,
   Tweet,
   IconWrapper,
   HorizontalSeparator,
+  ModalSearch,
 } from '~/components';
 import { colors } from '~/styles';
 import { Container, Button } from './styles';
@@ -22,6 +23,8 @@ const propTypes = {
 };
 
 function Tweets({ navigation }) {
+  // states
+  const [modalVisible, setModalVisible] = useState(false);
   // connect using hooks ♥
   const dispatch = useDispatch();
   const topic = useSelector(state => state.tweetsReducer.topic);
@@ -32,12 +35,25 @@ function Tweets({ navigation }) {
     dispatch(reqGetTweets(topic));
   }, []);
 
+  function onSubmit() {
+    setModalVisible(false);
+    //--
+    dispatch(reqGetTweets(topic));
+  }
+
+  function handleBack() {
+    navigation.goBack();
+    //--
+    dispatch(setTweetTopic(''));
+  }
+
   function renderTweet(item) {
     return (
       <Tweet
         name={item.user.name}
         profileImage={item.user.profile_image_url_https}
         username={item.user.screen_name}
+        replyName={item.in_reply_to_screen_name}
         date={item.created_at}
         text={item.text}
         favoriteCount={item.favorite_count}
@@ -50,7 +66,7 @@ function Tweets({ navigation }) {
   return (
     <Container>
       <Toolbar>
-        <Button onPress={() => navigation.goBack()}>
+        <Button onPress={handleBack}>
           <IconWrapper
             type="Ionicons"
             name="ios-arrow-back"
@@ -61,7 +77,7 @@ function Tweets({ navigation }) {
         <TouchableSearchBar
           title={topic}
           textColor="black"
-          onPress={() => navigation.goBack()}
+          onPress={() => setModalVisible(true)}
         />
         <IconWrapper
           type="Ionicons"
@@ -77,6 +93,11 @@ function Tweets({ navigation }) {
         ItemSeparatorComponent={HorizontalSeparator}
         refreshing={loading}
         onRefresh={() => dispatch(reqGetTweets(topic))}
+      />
+      <ModalSearch
+        visible={modalVisible}
+        handleDismiss={() => setModalVisible(false)}
+        handleSubmit={() => onSubmit()}
       />
     </Container>
   );

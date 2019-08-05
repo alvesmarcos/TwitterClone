@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlatList, StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,6 +9,7 @@ import {
   Toolbar,
   TouchableSearchBar,
   HorizontalSeparator,
+  ModalSearch,
 } from '~/components';
 import Trend from './components/Trend';
 import ProfileLogo from '~/assets/alvsdev.jpg';
@@ -24,6 +25,8 @@ const propTypes = {
 };
 
 function Home({ navigation }) {
+  // states
+  const [modalVisible, setModalVisible] = useState(false);
   // connect using hooks ♥
   const dispatch = useDispatch();
   const trends = useSelector(state => state.trendsReducer.data);
@@ -61,7 +64,7 @@ function Home({ navigation }) {
         <TouchableSearchBar
           title="Search Twitter"
           textColor="grey"
-          onPress={() => navigation.navigate('Search')}
+          onPress={() => setModalVisible(true)}
         />
         <IconWrapper
           type="SimpleLineIcons"
@@ -84,6 +87,11 @@ function Home({ navigation }) {
         ListFooterComponent={FooterList}
         refreshing={loading}
         onRefresh={() => dispatch(reqGetTrends())}
+      />
+      <ModalSearch
+        visible={modalVisible}
+        handleDismiss={() => setModalVisible(false)}
+        handleSubmit={() => navigation.navigate('Tweets')}
       />
     </Container>
   );

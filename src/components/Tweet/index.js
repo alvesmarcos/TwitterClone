@@ -20,6 +20,7 @@ const propTypes = {
   name: PropTypes.string.isRequired,
   profileImage: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
+  replyName: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   favoriteCount: PropTypes.number,
@@ -37,6 +38,7 @@ function Tweet({
   name,
   profileImage,
   username,
+  replyName,
   date,
   text,
   favoriteCount,
@@ -54,12 +56,14 @@ function Tweet({
           <Text color="gray">{` @${username}`}</Text>
           <Text color="gray">{` • ${format(date, 'MMM D')}`}</Text>
         </ContentRow>
-        <ContentColumn>
-          <Text color="gray">
-            Replying to
-            <Text color={colors.accent}> @spfc </Text>
-          </Text>
-        </ContentColumn>
+        {replyName && (
+          <ContentColumn>
+            <Text color="gray">
+              Replying to
+              <Text color={colors.accent}>{` @${replyName}`}</Text>
+            </Text>
+          </ContentColumn>
+        )}
         <ContentColumn>
           <Text color="black">{text}</Text>
         </ContentColumn>

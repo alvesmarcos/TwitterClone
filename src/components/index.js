@@ -4,6 +4,7 @@ import Toolbar from './Toolbar';
 import TouchableSearchBar from './TouchableSearchBar';
 import Tweet from './Tweet';
 import HorizontalSeparator from './HorizontalSeparator';
+import ModalSearch from './ModalSearch';
 
 export {
   AvatarImage,
@@ -12,4 +13,5 @@ export {
   TouchableSearchBar,
   Tweet,
   HorizontalSeparator,
+  ModalSearch,
 };
