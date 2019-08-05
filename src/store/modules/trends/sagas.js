@@ -6,7 +6,11 @@ import { Types } from './reducer';
 
 function* getTrends() {
   try {
-    const response = yield call(api.get, '/trends/place.json?id=23424768');
+    const response = yield call(api.get, '/trends/place.json', {
+      params: {
+        id: '23424768',
+      },
+    });
     const { trends } = response.data[0];
     yield put(successGetTrends(trends));
   } catch (error) {

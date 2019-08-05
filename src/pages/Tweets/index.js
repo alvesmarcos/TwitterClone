@@ -1,8 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { View } from 'react-native';
+import { FlatList } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Toolbar, TouchableSearchBar, Tweet, IconWrapper } from '~/components';
+import { reqGetTweets } from '~/store/modules/tweets/actions';
+import {
+  Toolbar,
+  TouchableSearchBar,
+  Tweet,
+  IconWrapper,
+  HorizontalSeparator,
+} from '~/components';
 import { colors } from '~/styles';
 import { Container, Button } from './styles';
 
@@ -14,6 +22,31 @@ const propTypes = {
 };
 
 function Tweets({ navigation }) {
+  // connect using hooks ♥
+  const dispatch = useDispatch();
+  const topic = useSelector(state => state.tweetsReducer.topic);
+  const tweets = useSelector(state => state.tweetsReducer.data);
+  const loading = useSelector(state => state.tweetsReducer.loading);
+
+  useEffect(() => {
+    dispatch(reqGetTweets(topic));
+  }, []);
+
+  function renderTweet(item) {
+    return (
+      <Tweet
+        name={item.user.name}
+        profileImage={item.user.profile_image_url_https}
+        username={item.user.screen_name}
+        date={item.created_at}
+        text={item.text}
+        favoriteCount={item.favorite_count}
+        replyCount={item.reply_count}
+        retweetCount={item.retweet_count}
+      />
+    );
+  }
+
   return (
     <Container>
       <Toolbar>
@@ -26,7 +59,7 @@ function Tweets({ navigation }) {
           />
         </Button>
         <TouchableSearchBar
-          title="Desenvolvimento"
+          title={topic}
           textColor="black"
           onPress={() => navigation.goBack()}
         />
@@ -37,44 +70,13 @@ function Tweets({ navigation }) {
           color={colors.accent}
         />
       </Toolbar>
-      <Tweet
-        name="Marcos Alves"
-        username="@alvesdev"
-        date="3d"
-        text="Learn how to troubleshoot messages that pass through Amazon SNS topics by using AWS X-Ray"
-        favoriteCount={40}
-        replyCount={3}
-        retweetCount={19}
-      />
-      <View style={{ color: 'gray', height: 1 }} />
-      <Tweet
-        name="Marcos Alves"
-        username="@alvesdev"
-        date="3d"
-        text="Learn how to troubleshoot messages that pass through Amazon SNS topics by using AWS X-Ray"
-        favoriteCount={40}
-        replyCount={3}
-        retweetCount={19}
-      />
-      <View style={{ color: 'gray', height: 1 }} />
-      <Tweet
-        name="Marcos Alves"
-        username="@alvesdev"
-        date="3d"
-        text="Learn how to troubleshoot messages that pass through Amazon SNS topics by using AWS X-Ray"
-        favoriteCount={40}
-        replyCount={3}
-        retweetCount={19}
-      />
-      <View style={{ color: 'gray', height: 1 }} />
-      <Tweet
-        name="Marcos Alves"
-        username="@alvesdev"
-        date="3d"
-        text="Learn how to troubleshoot messages that pass through Amazon SNS topics by using AWS X-Ray"
-        favoriteCount={40}
-        replyCount={3}
-        retweetCount={19}
+      <FlatList
+        data={tweets}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item, index }) => renderTweet(item, index)}
+        ItemSeparatorComponent={HorizontalSeparator}
+        refreshing={loading}
+        onRefresh={() => dispatch(reqGetTweets(topic))}
       />
     </Container>
   );

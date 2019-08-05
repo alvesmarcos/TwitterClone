@@ -14,8 +14,8 @@ const defaultProps = {
   volume: 0,
 };
 
-const Trend = ({ rank, name, volume }) => (
-  <Container>
+const Trend = ({ rank, name, volume, ...rest }) => (
+  <Container {...rest}>
     <TextRank>{`${rank} • Trending`}</TextRank>
     <TextName>{name}</TextName>
     {volume && (

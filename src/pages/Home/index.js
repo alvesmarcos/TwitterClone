@@ -14,6 +14,7 @@ import Trend from './components/Trend';
 import ProfileLogo from '~/assets/alvsdev.jpg';
 import { colors } from '~/styles';
 import { reqGetTrends } from '~/store/modules/trends/actions';
+import { setTweetTopic } from '~/store/modules/tweets/actions';
 import { Container, FooterList, HeaderList, TrendHeader } from './styles';
 
 const propTypes = {
@@ -32,9 +33,20 @@ function Home({ navigation }) {
     dispatch(reqGetTrends());
   }, []);
 
+  function searchTweets(topic) {
+    dispatch(setTweetTopic(topic));
+    //--
+    navigation.navigate('Tweets');
+  }
+
   function renderTrend(item, index) {
     return (
-      <Trend rank={index + 1} name={item.name} volume={item.tweet_volume} />
+      <Trend
+        onPress={() => searchTweets(item.name)}
+        rank={index + 1}
+        name={item.name}
+        volume={item.tweet_volume}
+      />
     );
   }
 

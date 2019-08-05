@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Animated } from 'react-native';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { IconWrapper, Toolbar } from '~/components';
 import { colors } from '~/styles';
+import { setTweetTopic } from '~/store/modules/tweets/actions';
 import {
   Container,
   SearchContainer,
@@ -21,7 +23,12 @@ const propTypes = {
 };
 
 function Search({ navigation }) {
-  const [text, setText] = useState('');
+  // connect using hooks ♥
+  const topic = useSelector(state => state.tweetsReducer.topic);
+  const dispatch = useDispatch();
+
+  // states
+  const [text, setText] = useState(topic);
   const [helperTextY] = useState(new Animated.Value(0));
 
   useEffect(() => {
@@ -32,6 +39,8 @@ function Search({ navigation }) {
   }, []);
 
   function handleSearch() {
+    dispatch(setTweetTopic(text));
+    //--
     navigation.navigate('Tweets');
   }
 

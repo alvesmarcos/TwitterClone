@@ -16,6 +16,7 @@ export const Content = styled.View`
 
 export const ContentRow = styled.View`
   flex-direction: row;
+  overflow: hidden;
 `;
 
 export const ContentColumn = styled.View`

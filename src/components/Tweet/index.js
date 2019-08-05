@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { format } from 'date-fns';
 
 import AvatarImage from '~/components/AvatarImage';
 import IconWrapper from '~/components/IconWrapper';
 import { colors } from '~/styles';
+import { formatNumberVolume } from '~/util';
 import {
   Container,
   Content,
@@ -16,7 +18,7 @@ import {
 
 const propTypes = {
   name: PropTypes.string.isRequired,
-  imageProfile: PropTypes.string.isRequired,
+  profileImage: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
@@ -33,7 +35,7 @@ const defaultProps = {
 
 function Tweet({
   name,
-  imageProfile,
+  profileImage,
   username,
   date,
   text,
@@ -43,14 +45,14 @@ function Tweet({
 }) {
   return (
     <Container>
-      <AvatarImage imgSrc={imageProfile} size={60} isRemote />
+      <AvatarImage imgSrc={profileImage} size={60} isRemote />
       <Content>
         <ContentRow>
           <Text color="black" weight="bold">
             {name}
           </Text>
-          <Text color="gray">{` ${username}`}</Text>
-          <Text color="gray">{` • ${date}`}</Text>
+          <Text color="gray">{` @${username}`}</Text>
+          <Text color="gray">{` • ${format(date, 'MMM D')}`}</Text>
         </ContentRow>
         <ContentColumn>
           <Text color="gray">
@@ -69,7 +71,9 @@ function Tweet({
               size={25}
               color="grey"
             />
-            <TextCount>{replyCount}</TextCount>
+            <TextCount>
+              {replyCount ? formatNumberVolume(replyCount) : ''}
+            </TextCount>
           </ContentRow>
           <ContentRow>
             <IconWrapper
@@ -78,11 +82,15 @@ function Tweet({
               size={25}
               color="grey"
             />
-            <TextCount>{retweetCount}</TextCount>
+            <TextCount>
+              {retweetCount ? formatNumberVolume(retweetCount) : ''}
+            </TextCount>
           </ContentRow>
           <ContentRow>
             <IconWrapper type="EvilIcons" name="heart" size={25} color="grey" />
-            <TextCount>{favoriteCount}</TextCount>
+            <TextCount>
+              {favoriteCount ? formatNumberVolume(favoriteCount) : ''}
+            </TextCount>
           </ContentRow>
           <ContentRow>
             <IconWrapper
