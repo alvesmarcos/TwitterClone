@@ -35,12 +35,6 @@ function Tweets({ navigation }) {
     dispatch(reqGetTweets(topic));
   }, []);
 
-  function onSubmit() {
-    setModalVisible(false);
-    //--
-    dispatch(reqGetTweets(topic));
-  }
-
   function handleBack() {
     navigation.goBack();
     //--
@@ -97,7 +91,7 @@ function Tweets({ navigation }) {
       <ModalSearch
         visible={modalVisible}
         handleDismiss={() => setModalVisible(false)}
-        handleSubmit={() => onSubmit()}
+        handleSubmit={() => dispatch(reqGetTweets(topic))}
       />
     </Container>
   );

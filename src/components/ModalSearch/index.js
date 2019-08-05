@@ -34,7 +34,7 @@ function ModalSearch({ handleDismiss, handleSubmit, visible }) {
   useEffect(() => {
     if (visible) {
       Animated.spring(helperTextY, {
-        toValue: 25,
+        toValue: 20,
         bounciness: 15,
       }).start();
     } else {
@@ -44,6 +44,11 @@ function ModalSearch({ handleDismiss, handleSubmit, visible }) {
 
   function handleValueChange(text) {
     dispatch(setTweetTopic(text));
+  }
+
+  function onSubmit() {
+    handleSubmit();
+    handleDismiss();
   }
 
   return (
@@ -66,7 +71,7 @@ function ModalSearch({ handleDismiss, handleSubmit, visible }) {
               onChangeText={handleValueChange}
               placeholder="Search Twitter"
               selectionColor={colors.accent}
-              onSubmitEditing={handleSubmit}
+              onSubmitEditing={onSubmit}
               autoFocus
             />
             {topic.length !== 0 && (
