@@ -1,24 +1,20 @@
-import React from 'react';
-import { StatusBar } from 'react-native';
+import React, { useEffect } from 'react';
+import { FlatList, StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   AvatarImage,
   IconWrapper,
   Toolbar,
   TouchableSearchBar,
+  HorizontalSeparator,
 } from '~/components';
+import Trend from './components/Trend';
 import ProfileLogo from '~/assets/alvsdev.jpg';
 import { colors } from '~/styles';
-import {
-  Container,
-  Trend,
-  TrendName,
-  TrendPosition,
-  TrendTextHeader,
-  TrendVolume,
-  HorizontalSeparator,
-} from './styles';
+import { reqGetTrends } from '~/store/modules/trends/actions';
+import { Container, FooterList, HeaderList, TrendHeader } from './styles';
 
 const propTypes = {
   navigation: PropTypes.shape({
@@ -27,6 +23,21 @@ const propTypes = {
 };
 
 function Home({ navigation }) {
+  // connect using hooks ♥
+  const dispatch = useDispatch();
+  const trends = useSelector(state => state.trendsReducer.data);
+  const loading = useSelector(state => state.trendsReducer.loading);
+
+  useEffect(() => {
+    dispatch(reqGetTrends());
+  }, []);
+
+  function renderTrend(item, index) {
+    return (
+      <Trend rank={index + 1} name={item.name} volume={item.tweet_volume} />
+    );
+  }
+
   return (
     <Container>
       <StatusBar
@@ -47,21 +58,21 @@ function Home({ navigation }) {
           color={colors.accent}
         />
       </Toolbar>
-      <Trend>
-        <TrendTextHeader>trends</TrendTextHeader>
-      </Trend>
-      <HorizontalSeparator />
-      <Trend>
-        <TrendPosition>1 • Trending</TrendPosition>
-        <TrendName>Muriel</TrendName>
-        <TrendVolume>5,346 Tweets</TrendVolume>
-      </Trend>
-      <HorizontalSeparator />
-      <Trend>
-        <TrendPosition>2 • Trending</TrendPosition>
-        <TrendName>Youny</TrendName>
-        <TrendVolume>1,346 Tweets</TrendVolume>
-      </Trend>
+      <FlatList
+        data={trends}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item, index }) => renderTrend(item, index)}
+        ItemSeparatorComponent={HorizontalSeparator}
+        ListHeaderComponent={() => (
+          <HeaderList>
+            <TrendHeader>Brazil trends</TrendHeader>
+            <HorizontalSeparator />
+          </HeaderList>
+        )}
+        ListFooterComponent={FooterList}
+        refreshing={loading}
+        onRefresh={() => dispatch(reqGetTrends())}
+      />
     </Container>
   );
 }
