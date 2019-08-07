@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 import { colors } from '~/styles';
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
   background-color: ${colors.primary};
   padding: 16px;
   flex-direction: row;

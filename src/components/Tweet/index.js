@@ -44,9 +44,10 @@ function Tweet({
   favoriteCount,
   replyCount,
   retweetCount,
+  ...rest
 }) {
   return (
-    <Container>
+    <Container {...rest}>
       <AvatarImage imgSrc={profileImage} size={60} isRemote />
       <Content>
         <ContentRow>

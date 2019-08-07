@@ -4,6 +4,7 @@ import { FlatList } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { reqGetTweets, setTweetTopic } from '~/store/modules/tweets/actions';
+import { setUserData } from '~/store/modules/user/actions';
 import {
   Toolbar,
   TouchableSearchBar,
@@ -25,7 +26,7 @@ const propTypes = {
 function Tweets({ navigation }) {
   // states
   const [modalVisible, setModalVisible] = useState(false);
-  // connect using hooks ♥
+  // connect with reducer using hooks ♥
   const dispatch = useDispatch();
   const topic = useSelector(state => state.tweetsReducer.topic);
   const tweets = useSelector(state => state.tweetsReducer.data);
@@ -41,6 +42,11 @@ function Tweets({ navigation }) {
     dispatch(setTweetTopic(''));
   }
 
+  function handleActionTweet(user) {
+    dispatch(setUserData(user));
+    navigation.navigate('Profile');
+  }
+
   function renderTweet(item) {
     return (
       <Tweet
@@ -53,6 +59,7 @@ function Tweets({ navigation }) {
         favoriteCount={item.favorite_count}
         replyCount={item.reply_count}
         retweetCount={item.retweet_count}
+        onPress={() => handleActionTweet(item.user)}
       />
     );
   }
