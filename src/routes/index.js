@@ -3,7 +3,7 @@ import { createAppContainer, createStackNavigator } from 'react-navigation';
 import { Home, Profile, Tweets } from '~/pages';
 
 const AppNavigator = createStackNavigator(
-  { Home, Tweets, Profile },
+  { Home, Profile, Tweets },
   { headerMode: 'none' }
 );
 

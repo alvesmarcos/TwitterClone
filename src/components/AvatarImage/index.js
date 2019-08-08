@@ -14,8 +14,8 @@ const defaultProps = {
   isRemote: false,
 };
 
-const AvatarImage = ({ imgSrc, size, isRemote }) => (
-  <Container>
+const AvatarImage = ({ imgSrc, size, isRemote, ...rest }) => (
+  <Container size={size} {...rest}>
     {isRemote ? (
       <Image source={{ uri: imgSrc }} size={size} />
     ) : (
