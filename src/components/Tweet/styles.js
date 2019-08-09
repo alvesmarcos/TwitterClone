@@ -1,9 +1,7 @@
 import styled from 'styled-components/native';
 
-import { colors } from '~/styles';
-
 export const Container = styled.TouchableOpacity`
-  background-color: ${colors.primary};
+  background-color: ${props => props.theme.primary};
   padding: 16px;
   flex-direction: row;
 `;
@@ -39,5 +37,5 @@ export const ActionContainer = styled.View`
 
 export const TextCount = styled.Text`
   margin-left: 4px;
-  color: gray;
+  color: ${props => props.theme.hint};
 `;

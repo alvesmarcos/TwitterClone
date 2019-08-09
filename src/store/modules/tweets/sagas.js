@@ -9,7 +9,7 @@ function* getTweets({ payload }) {
     const response = yield call(api.get, '/search/tweets.json', {
       params: {
         q: payload,
-        count: 50,
+        count: 15,
         include_entities: false,
       },
     });

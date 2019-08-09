@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
+import { useSelector } from 'react-redux';
 
 import AvatarImage from '~/components/AvatarImage';
 import IconWrapper from '~/components/IconWrapper';
-import { colors } from '~/styles';
 import { formatNumberVolume } from '~/util';
 import {
   Container,
@@ -34,7 +34,7 @@ const defaultProps = {
   retweetCount: 0,
 };
 
-const Tweet = ({
+function Tweet({
   name,
   profileImage,
   username,
@@ -45,59 +45,78 @@ const Tweet = ({
   replyCount,
   retweetCount,
   ...rest
-}) => (
-  <Container {...rest}>
-    <AvatarImage imgSrc={profileImage} size={60} isRemote />
-    <Content>
-      <ContentRow>
-        <Text color="black" weight="bold">
-          {name}
-        </Text>
-        <Text color="gray">{` @${username}`}</Text>
-        <Text color="gray">{` • ${format(date, 'MMM D')}`}</Text>
-      </ContentRow>
-      {replyName && (
-        <ContentColumn>
-          <Text color="gray">
-            Replying to
-            <Text color={colors.accent}>{` @${replyName}`}</Text>
+}) {
+  const theme = useSelector(state => state.themeReducer.mode);
+
+  return (
+    <Container {...rest}>
+      <AvatarImage imgSrc={profileImage} size={60} isRemote />
+      <Content>
+        <ContentRow>
+          <Text color={theme.contrast} weight="bold">
+            {name}
           </Text>
+          <Text color={theme.hint}>{` @${username}`}</Text>
+          <Text color={theme.hint}>{` • ${format(date, 'MMM D')}`}</Text>
+        </ContentRow>
+        {replyName && (
+          <ContentColumn>
+            <Text color={theme.hint}>
+              Replying to
+              <Text color={theme.accent}>{` @${replyName}`}</Text>
+            </Text>
+          </ContentColumn>
+        )}
+        <ContentColumn>
+          <Text color={theme.contrast}>{text}</Text>
         </ContentColumn>
-      )}
-      <ContentColumn>
-        <Text color="black">{text}</Text>
-      </ContentColumn>
-      <ActionContainer>
-        <ContentRow>
-          <IconWrapper type="EvilIcons" name="comment" size={25} color="grey" />
-          <TextCount>
-            {replyCount ? formatNumberVolume(replyCount) : ''}
-          </TextCount>
-        </ContentRow>
-        <ContentRow>
-          <IconWrapper type="EvilIcons" name="retweet" size={25} color="grey" />
-          <TextCount>
-            {retweetCount ? formatNumberVolume(retweetCount) : ''}
-          </TextCount>
-        </ContentRow>
-        <ContentRow>
-          <IconWrapper type="EvilIcons" name="heart" size={25} color="grey" />
-          <TextCount>
-            {favoriteCount ? formatNumberVolume(favoriteCount) : ''}
-          </TextCount>
-        </ContentRow>
-        <ContentRow>
-          <IconWrapper
-            type="EvilIcons"
-            name="share-apple"
-            size={25}
-            color="grey"
-          />
-        </ContentRow>
-      </ActionContainer>
-    </Content>
-  </Container>
-);
+        <ActionContainer>
+          <ContentRow>
+            <IconWrapper
+              type="EvilIcons"
+              name="comment"
+              size={25}
+              color={theme.hint}
+            />
+            <TextCount>
+              {replyCount ? formatNumberVolume(replyCount) : ''}
+            </TextCount>
+          </ContentRow>
+          <ContentRow>
+            <IconWrapper
+              type="EvilIcons"
+              name="retweet"
+              size={25}
+              color={theme.hint}
+            />
+            <TextCount>
+              {retweetCount ? formatNumberVolume(retweetCount) : ''}
+            </TextCount>
+          </ContentRow>
+          <ContentRow>
+            <IconWrapper
+              type="EvilIcons"
+              name="heart"
+              size={25}
+              color={theme.hint}
+            />
+            <TextCount>
+              {favoriteCount ? formatNumberVolume(favoriteCount) : ''}
+            </TextCount>
+          </ContentRow>
+          <ContentRow>
+            <IconWrapper
+              type="EvilIcons"
+              name="share-apple"
+              size={25}
+              color={theme.hint}
+            />
+          </ContentRow>
+        </ActionContainer>
+      </Content>
+    </Container>
+  );
+}
 
 Tweet.propTypes = propTypes;
 Tweet.defaultProps = defaultProps;

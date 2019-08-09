@@ -4,5 +4,5 @@ import { colors } from '~/styles';
 
 export const Container = styled.View`
   height: 1px;
-  background-color: ${colors.primaryDark};
+  background-color: #37474f;
 `;

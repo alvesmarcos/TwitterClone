@@ -1,17 +1,14 @@
 import styled from 'styled-components/native';
-import { Animated } from 'react-native';
 import Modal from 'react-native-modal';
-
-import { colors } from '~/styles';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${colors.primaryDark};
+  background-color: ${props => props.theme.primaryDark};
 `;
 
 export const SearchContainer = styled.View`
   flex: 1;
-  background-color: ${colors.primaryDark};
+  background-color: ${props => props.theme.primaryDark};
   align-items: center;
   padding: 0px 16px 0px 16px;
   height: 36;
@@ -28,10 +25,11 @@ export const Input = styled.TextInput`
   justify-content: center;
   padding: 0px 0px 0px 8px;
   margin: 0px;
+  color: ${props => props.theme.contrast};
 `;
 
 export const RoundButton = styled.TouchableOpacity`
-  background-color: ${colors.accent};
+  background-color: ${props => props.theme.accent};
   height: 16px;
   width: 16px;
   border-radius: 8px;
@@ -41,16 +39,15 @@ export const RoundButton = styled.TouchableOpacity`
 
 export const TextBack = styled.Text`
   font-size: 16px;
-  color: ${colors.accent};
+  color: ${props => props.theme.accent};
 `;
 
 export const HelperText = styled.Text`
   font-size: 14px;
-  color: grey;
+  color: ${props => props.theme.hint};
   text-align: center;
+  top: 20px;
 `;
-
-export const HelperTextAnimated = Animated.createAnimatedComponent(HelperText);
 
 export const CustomModal = styled(Modal)`
   margin: 0px;

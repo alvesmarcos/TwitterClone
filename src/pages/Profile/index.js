@@ -81,7 +81,7 @@ function Profile({ navigation }) {
         metrics.profileImageMinHeight +
         50,
     ],
-    outputRange: [-40, -40, -40, 5],
+    outputRange: [-40, -30, -15, 5],
     extrapolate: 'clamp',
   });
 
@@ -120,11 +120,11 @@ function Profile({ navigation }) {
 
   return (
     <Container>
-      <StatusBar
+      {/* <StatusBar
         backgroundColor={colors.transparentDark}
         barStyle="light-content"
         translucent
-      />
+      /> */}
       <HeaderScrollableAnimated
         style={[
           {
@@ -135,7 +135,7 @@ function Profile({ navigation }) {
         ]}
       >
         <ContainerTextBottomAnimated style={{ bottom: headerTitleBottom }}>
-          <TitleBottom>{user.screen_name}</TitleBottom>
+          <TitleBottom>{`@${user.screen_name}`}</TitleBottom>
           <TitleBottom>{`${formatNumberVolume(
             user.statuses_count
           )} Tweets`}</TitleBottom>
@@ -197,6 +197,7 @@ function Profile({ navigation }) {
             ItemSeparatorComponent={HorizontalSeparator}
             refreshing={loading}
             onRefresh={reloadUserTimeline}
+            maxToRenderPerBatch={5}
             removeClippedSubviews
           />
         </View>

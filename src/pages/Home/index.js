@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FlatList, StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { ThemeProvider } from 'styled-components/native';
 
 import {
   AvatarImage,
@@ -13,7 +14,6 @@ import {
 } from '~/components';
 import Trend from './components/Trend';
 import ProfileLogo from '~/assets/alvsdev.jpg';
-import { colors } from '~/styles';
 import { reqGetTrends } from '~/store/modules/trends/actions';
 import { setTweetTopic } from '~/store/modules/tweets/actions';
 import { Container, FooterList, HeaderList, TrendHeader } from './styles';
@@ -29,6 +29,7 @@ function Home({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   // connect using hooks ♥
   const dispatch = useDispatch();
+  const theme = useSelector(state => state.themeReducer.mode);
   const trends = useSelector(state => state.trendsReducer.data);
   const loading = useSelector(state => state.trendsReducer.loading);
 
@@ -84,41 +85,45 @@ function Home({ navigation }) {
   }
 
   return (
-    <Container>
-      <StatusBar
-        backgroundColor={colors.primaryLight}
-        barStyle="dark-content"
-      />
-      <Toolbar>
-        <AvatarImage imgSrc={ProfileLogo} size={36} />
-        <TouchableSearchBar
-          title="Search Twitter"
-          textColor="grey"
-          onPress={onShowModal}
+    <ThemeProvider theme={theme}>
+      <Container>
+        <StatusBar
+          backgroundColor={theme.primaryDark}
+          barStyle="light-content"
         />
-        <IconWrapper
-          type="SimpleLineIcons"
-          name="settings"
-          size={25}
-          color={colors.accent}
+        <Toolbar>
+          <AvatarImage imgSrc={ProfileLogo} size={36} />
+          <TouchableSearchBar
+            title="Search Twitter"
+            textColor={theme.hint}
+            onPress={onShowModal}
+          />
+          <IconWrapper
+            type="SimpleLineIcons"
+            name="settings"
+            size={25}
+            color={theme.accent}
+          />
+        </Toolbar>
+        <FlatList
+          data={trends}
+          keyExtractor={keyExtractor}
+          renderItem={renderTrend}
+          ItemSeparatorComponent={HorizontalSeparator}
+          ListHeaderComponent={renderHeader}
+          ListFooterComponent={FooterList}
+          refreshing={loading}
+          onRefresh={reloadTrends}
         />
-      </Toolbar>
-      <FlatList
-        data={trends}
-        keyExtractor={keyExtractor}
-        renderItem={renderTrend}
-        ItemSeparatorComponent={HorizontalSeparator}
-        ListHeaderComponent={renderHeader}
-        ListFooterComponent={FooterList}
-        refreshing={loading}
-        onRefresh={reloadTrends}
-      />
-      <ModalSearch
-        visible={modalVisible}
-        handleDismiss={onDismissModal}
-        handleSubmit={navigateToTweet}
-      />
-    </Container>
+        <ModalSearch
+          visible={modalVisible}
+          handleDismiss={onDismissModal}
+          handleSubmit={navigateToTweet}
+          textColor={theme.contrast}
+          placeholderColor={theme.hint}
+        />
+      </Container>
+    </ThemeProvider>
   );
 }
 

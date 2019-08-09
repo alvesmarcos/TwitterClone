@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Animated } from 'react-native';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Toolbar from '~/components/Toolbar';
 import IconWrapper from '~/components/IconWrapper';
-import { colors } from '~/styles';
 import { setTweetTopic } from '~/store/modules/tweets/actions';
 import {
   Container,
@@ -13,7 +11,7 @@ import {
   Input,
   TextBack,
   RoundButton,
-  HelperTextAnimated,
+  HelperText,
   CustomModal,
 } from './styles';
 
@@ -24,23 +22,14 @@ const propTypes = {
 };
 
 function ModalSearch({ handleDismiss, handleSubmit, visible }) {
+  const theme = useSelector(state => state.themeReducer.mode);
   // connect using hooks ♥
   const topic = useSelector(state => state.tweetsReducer.topic);
   const dispatch = useDispatch();
 
-  // states
-  const [helperTextY, setHelperTextY] = useState(new Animated.Value(0));
-
-  useEffect(() => {
-    if (visible) {
-      Animated.spring(helperTextY, {
-        toValue: 20,
-        bounciness: 15,
-      }).start();
-    } else {
-      setHelperTextY(new Animated.Value(0));
-    }
-  }, [visible]);
+  function clearTopic() {
+    dispatch(setTweetTopic(''));
+  }
 
   function handleValueChange(text) {
     dispatch(setTweetTopic(text));
@@ -70,12 +59,13 @@ function ModalSearch({ handleDismiss, handleSubmit, visible }) {
               value={topic}
               onChangeText={handleValueChange}
               placeholder="Search Twitter"
-              selectionColor={colors.accent}
+              placeholderTextColor={theme.hint}
+              selectionColor={theme.accent}
               onSubmitEditing={onSubmit}
               autoFocus
             />
             {topic.length !== 0 && (
-              <RoundButton onPress={() => handleValueChange('')}>
+              <RoundButton onPress={clearTopic}>
                 <IconWrapper
                   type="Ionicons"
                   name="ios-close"
@@ -87,9 +77,7 @@ function ModalSearch({ handleDismiss, handleSubmit, visible }) {
           </SearchContainer>
           <TextBack onPress={handleDismiss}>Cancel</TextBack>
         </Toolbar>
-        <HelperTextAnimated style={{ top: helperTextY }}>
-          Try searching for people, topics or keywords
-        </HelperTextAnimated>
+        <HelperText>Try searching for people, topics or keywords</HelperText>
       </Container>
     </CustomModal>
   );

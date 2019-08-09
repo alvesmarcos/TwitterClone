@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FlatList, StatusBar } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { ThemeProvider } from 'styled-components/native';
 
 import { reqGetTweets, setTweetTopic } from '~/store/modules/tweets/actions';
 import { setUserData } from '~/store/modules/user/actions';
@@ -28,6 +29,7 @@ function Tweets({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   // connect with reducer using hooks ♥
   const dispatch = useDispatch();
+  const theme = useSelector(state => state.themeReducer.mode);
   const topic = useSelector(state => state.tweetsReducer.topic);
   const tweets = useSelector(state => state.tweetsReducer.data);
   const loading = useSelector(state => state.tweetsReducer.loading);
@@ -86,46 +88,48 @@ function Tweets({ navigation }) {
   }
 
   return (
-    <Container>
-      <StatusBar
-        backgroundColor={colors.primaryLight}
-        barStyle="dark-content"
-      />
-      <Toolbar>
-        <Button onPress={handleBack}>
+    <ThemeProvider theme={theme}>
+      <Container>
+        <StatusBar
+          backgroundColor={theme.primaryDark}
+          barStyle="dark-content"
+        />
+        <Toolbar>
+          <Button onPress={handleBack}>
+            <IconWrapper
+              type="Ionicons"
+              name="ios-arrow-back"
+              size={25}
+              color={theme.accent}
+            />
+          </Button>
+          <TouchableSearchBar
+            title={topic}
+            textColor={theme.contrast}
+            onPress={onShowModal}
+          />
           <IconWrapper
             type="Ionicons"
-            name="ios-arrow-back"
+            name="ios-options"
             size={25}
-            color={colors.accent}
+            color={theme.accent}
           />
-        </Button>
-        <TouchableSearchBar
-          title={topic}
-          textColor="black"
-          onPress={onShowModal}
+        </Toolbar>
+        <FlatList
+          data={tweets}
+          keyExtractor={keyExtractor}
+          renderItem={renderTweet}
+          ItemSeparatorComponent={HorizontalSeparator}
+          refreshing={loading}
+          onRefresh={reloadTweets}
         />
-        <IconWrapper
-          type="Ionicons"
-          name="ios-options"
-          size={25}
-          color={colors.accent}
+        <ModalSearch
+          visible={modalVisible}
+          handleDismiss={onDismissModal}
+          handleSubmit={reloadTweets}
         />
-      </Toolbar>
-      <FlatList
-        data={tweets}
-        keyExtractor={keyExtractor}
-        renderItem={renderTweet}
-        ItemSeparatorComponent={HorizontalSeparator}
-        refreshing={loading}
-        onRefresh={reloadTweets}
-      />
-      <ModalSearch
-        visible={modalVisible}
-        handleDismiss={onDismissModal}
-        handleSubmit={reloadTweets}
-      />
-    </Container>
+      </Container>
+    </ThemeProvider>
   );
 }
 

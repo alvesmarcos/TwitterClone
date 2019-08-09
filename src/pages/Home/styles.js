@@ -1,10 +1,8 @@
 import styled from 'styled-components/native';
 
-import { colors } from '~/styles';
-
 export const Container = styled.View`
   flex: 1;
-  background-color: ${colors.primaryDark};
+  background-color: ${props => props.theme.primaryDark};
 `;
 
 export const FooterList = styled.View`
@@ -12,12 +10,12 @@ export const FooterList = styled.View`
 `;
 
 export const HeaderList = styled.View`
-  background-color: ${colors.primary};
+  background-color: ${props => props.theme.primary};
 `;
 
 export const TrendHeader = styled.Text`
   font-weight: bold;
-  color: black;
+  color: white;
   font-size: 18px;
   margin: 8px 16px;
 `;

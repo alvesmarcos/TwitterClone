@@ -1,7 +1,5 @@
 import styled from 'styled-components/native';
 
-import { colors } from '~/styles';
-
 export const Container = styled.TouchableWithoutFeedback`
   flex: 1;
 `;
@@ -10,7 +8,7 @@ export const ContentSearchBar = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: ${colors.primaryDark};
+  background-color: ${props => props.theme.primaryDark};
   padding: 0px 8px 0px 8px;
   height: 36;
   flex-direction: row;

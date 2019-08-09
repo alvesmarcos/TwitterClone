@@ -16,7 +16,7 @@ const defaultProps = {
 const TouchableSearchBar = ({ title, textColor, ...rest }) => (
   <Container {...rest}>
     <ContentSearchBar>
-      <IconWrapper type="Ionicons" name="ios-search" size={20} color="grey" />
+      <IconWrapper type="Ionicons" name="ios-search" size={20} color="gray" />
       <PlaceholderSearch color={textColor}>{title}</PlaceholderSearch>
     </ContentSearchBar>
   </Container>

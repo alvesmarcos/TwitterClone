@@ -9,7 +9,7 @@ function* getUserTimeline({ payload }) {
     const response = yield call(api.get, '/statuses/user_timeline.json', {
       params: {
         user_id: payload,
-        count: 50,
+        count: 15,
       },
     });
     yield put(successGetUserTimeline(response.data));
