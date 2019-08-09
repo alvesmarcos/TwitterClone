@@ -36,13 +36,34 @@ function Home({ navigation }) {
     dispatch(reqGetTrends());
   }, []);
 
-  function searchTweets(topic) {
-    dispatch(setTweetTopic(topic));
-    //--
+  function keyExtractor(_, index) {
+    return index.toString();
+  }
+
+  function onDismissModal() {
+    setModalVisible(false);
+  }
+
+  function onShowModal() {
+    setModalVisible(true);
+  }
+
+  function navigateToTweet() {
     navigation.navigate('Tweets');
   }
 
-  function renderTrend(item, index) {
+  function reloadTrends() {
+    dispatch(reqGetTrends());
+  }
+
+  function searchTweets(topic) {
+    dispatch(setTweetTopic(topic));
+    //--
+    navigateToTweet();
+  }
+
+  function renderTrend(data) {
+    const { item, index } = data;
     return (
       <Trend
         onPress={() => searchTweets(item.name)}
@@ -50,6 +71,15 @@ function Home({ navigation }) {
         name={item.name}
         volume={item.tweet_volume}
       />
+    );
+  }
+
+  function renderHeader() {
+    return (
+      <HeaderList>
+        <TrendHeader>Brazil trends</TrendHeader>
+        <HorizontalSeparator />
+      </HeaderList>
     );
   }
 
@@ -64,7 +94,7 @@ function Home({ navigation }) {
         <TouchableSearchBar
           title="Search Twitter"
           textColor="grey"
-          onPress={() => setModalVisible(true)}
+          onPress={onShowModal}
         />
         <IconWrapper
           type="SimpleLineIcons"
@@ -75,23 +105,18 @@ function Home({ navigation }) {
       </Toolbar>
       <FlatList
         data={trends}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item, index }) => renderTrend(item, index)}
+        keyExtractor={keyExtractor}
+        renderItem={renderTrend}
         ItemSeparatorComponent={HorizontalSeparator}
-        ListHeaderComponent={() => (
-          <HeaderList>
-            <TrendHeader>Brazil trends</TrendHeader>
-            <HorizontalSeparator />
-          </HeaderList>
-        )}
+        ListHeaderComponent={renderHeader}
         ListFooterComponent={FooterList}
         refreshing={loading}
-        onRefresh={() => dispatch(reqGetTrends())}
+        onRefresh={reloadTrends}
       />
       <ModalSearch
         visible={modalVisible}
-        handleDismiss={() => setModalVisible(false)}
-        handleSubmit={() => navigation.navigate('Tweets')}
+        handleDismiss={onDismissModal}
+        handleSubmit={navigateToTweet}
       />
     </Container>
   );

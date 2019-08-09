@@ -34,7 +34,7 @@ export const ActionContainer = styled.View`
   flex-direction: row;
   margin-top: 8px;
   justify-content: space-between;
-  padding-right: 64px;
+  padding-right: 32px;
 `;
 
 export const TextCount = styled.Text`

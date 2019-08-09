@@ -34,7 +34,7 @@ const defaultProps = {
   retweetCount: 0,
 };
 
-function Tweet({
+const Tweet = ({
   name,
   profileImage,
   username,
@@ -45,71 +45,59 @@ function Tweet({
   replyCount,
   retweetCount,
   ...rest
-}) {
-  return (
-    <Container {...rest}>
-      <AvatarImage imgSrc={profileImage} size={60} isRemote />
-      <Content>
-        <ContentRow>
-          <Text color="black" weight="bold">
-            {name}
-          </Text>
-          <Text color="gray">{` @${username}`}</Text>
-          <Text color="gray">{` • ${format(date, 'MMM D')}`}</Text>
-        </ContentRow>
-        {replyName && (
-          <ContentColumn>
-            <Text color="gray">
-              Replying to
-              <Text color={colors.accent}>{` @${replyName}`}</Text>
-            </Text>
-          </ContentColumn>
-        )}
+}) => (
+  <Container {...rest}>
+    <AvatarImage imgSrc={profileImage} size={60} isRemote />
+    <Content>
+      <ContentRow>
+        <Text color="black" weight="bold">
+          {name}
+        </Text>
+        <Text color="gray">{` @${username}`}</Text>
+        <Text color="gray">{` • ${format(date, 'MMM D')}`}</Text>
+      </ContentRow>
+      {replyName && (
         <ContentColumn>
-          <Text color="black">{text}</Text>
+          <Text color="gray">
+            Replying to
+            <Text color={colors.accent}>{` @${replyName}`}</Text>
+          </Text>
         </ContentColumn>
-        <ActionContainer>
-          <ContentRow>
-            <IconWrapper
-              type="EvilIcons"
-              name="comment"
-              size={25}
-              color="grey"
-            />
-            <TextCount>
-              {replyCount ? formatNumberVolume(replyCount) : ''}
-            </TextCount>
-          </ContentRow>
-          <ContentRow>
-            <IconWrapper
-              type="EvilIcons"
-              name="retweet"
-              size={25}
-              color="grey"
-            />
-            <TextCount>
-              {retweetCount ? formatNumberVolume(retweetCount) : ''}
-            </TextCount>
-          </ContentRow>
-          <ContentRow>
-            <IconWrapper type="EvilIcons" name="heart" size={25} color="grey" />
-            <TextCount>
-              {favoriteCount ? formatNumberVolume(favoriteCount) : ''}
-            </TextCount>
-          </ContentRow>
-          <ContentRow>
-            <IconWrapper
-              type="EvilIcons"
-              name="share-apple"
-              size={25}
-              color="grey"
-            />
-          </ContentRow>
-        </ActionContainer>
-      </Content>
-    </Container>
-  );
-}
+      )}
+      <ContentColumn>
+        <Text color="black">{text}</Text>
+      </ContentColumn>
+      <ActionContainer>
+        <ContentRow>
+          <IconWrapper type="EvilIcons" name="comment" size={25} color="grey" />
+          <TextCount>
+            {replyCount ? formatNumberVolume(replyCount) : ''}
+          </TextCount>
+        </ContentRow>
+        <ContentRow>
+          <IconWrapper type="EvilIcons" name="retweet" size={25} color="grey" />
+          <TextCount>
+            {retweetCount ? formatNumberVolume(retweetCount) : ''}
+          </TextCount>
+        </ContentRow>
+        <ContentRow>
+          <IconWrapper type="EvilIcons" name="heart" size={25} color="grey" />
+          <TextCount>
+            {favoriteCount ? formatNumberVolume(favoriteCount) : ''}
+          </TextCount>
+        </ContentRow>
+        <ContentRow>
+          <IconWrapper
+            type="EvilIcons"
+            name="share-apple"
+            size={25}
+            color="grey"
+          />
+        </ContentRow>
+      </ActionContainer>
+    </Content>
+  </Container>
+);
 
 Tweet.propTypes = propTypes;
 Tweet.defaultProps = defaultProps;

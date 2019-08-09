@@ -7,7 +7,7 @@ export default {
   baseMargin: 16,
   screenWidth: width < height ? width : height,
   sceenHeight: width < height ? height : width,
-  headerMaxHeight: 120,
+  headerMaxHeight: 140,
   headerMinHeight: 70,
   profileImageMaxHeight: 80,
   profileImageMinHeight: 40,

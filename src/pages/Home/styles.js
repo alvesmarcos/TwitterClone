@@ -13,11 +13,11 @@ export const FooterList = styled.View`
 
 export const HeaderList = styled.View`
   background-color: ${colors.primary};
-  padding: 8px 16px;
 `;
 
 export const TrendHeader = styled.Text`
   font-weight: bold;
   color: black;
   font-size: 18px;
+  margin: 8px 16px;
 `;

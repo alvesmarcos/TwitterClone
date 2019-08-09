@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { FlatList } from 'react-native';
+import { FlatList, StatusBar } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { reqGetTweets, setTweetTopic } from '~/store/modules/tweets/actions';
@@ -36,6 +36,22 @@ function Tweets({ navigation }) {
     dispatch(reqGetTweets(topic));
   }, []);
 
+  function keyExtractor(_, index) {
+    return index.toString();
+  }
+
+  function onDismissModal() {
+    setModalVisible(false);
+  }
+
+  function onShowModal() {
+    setModalVisible(true);
+  }
+
+  function navigateToProfile() {
+    navigation.navigate('Profile');
+  }
+
   function handleBack() {
     navigation.goBack();
     //--
@@ -44,10 +60,15 @@ function Tweets({ navigation }) {
 
   function handleActionTweet(user) {
     dispatch(setUserData(user));
-    navigation.navigate('Profile');
+    navigateToProfile();
   }
 
-  function renderTweet(item) {
+  function reloadTweets() {
+    dispatch(reqGetTweets(topic));
+  }
+
+  function renderTweet(data) {
+    const { item } = data;
     return (
       <Tweet
         name={item.user.name}
@@ -66,6 +87,10 @@ function Tweets({ navigation }) {
 
   return (
     <Container>
+      <StatusBar
+        backgroundColor={colors.primaryLight}
+        barStyle="dark-content"
+      />
       <Toolbar>
         <Button onPress={handleBack}>
           <IconWrapper
@@ -78,7 +103,7 @@ function Tweets({ navigation }) {
         <TouchableSearchBar
           title={topic}
           textColor="black"
-          onPress={() => setModalVisible(true)}
+          onPress={onShowModal}
         />
         <IconWrapper
           type="Ionicons"
@@ -89,16 +114,16 @@ function Tweets({ navigation }) {
       </Toolbar>
       <FlatList
         data={tweets}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item, index }) => renderTweet(item, index)}
+        keyExtractor={keyExtractor}
+        renderItem={renderTweet}
         ItemSeparatorComponent={HorizontalSeparator}
         refreshing={loading}
-        onRefresh={() => dispatch(reqGetTweets(topic))}
+        onRefresh={reloadTweets}
       />
       <ModalSearch
         visible={modalVisible}
-        handleDismiss={() => setModalVisible(false)}
-        handleSubmit={() => dispatch(reqGetTweets(topic))}
+        handleDismiss={onDismissModal}
+        handleSubmit={reloadTweets}
       />
     </Container>
   );
