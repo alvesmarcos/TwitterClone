@@ -6,7 +6,7 @@
 
 ## Description
 
-Simple Twitter clone using React Native
+A simple Twitter clone using React Native
 
 ## Prerequisites
 
