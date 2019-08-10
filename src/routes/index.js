@@ -1,11 +1,10 @@
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 
 import transitionConfig from '~/config/Transition';
-// import { Home, Profile, Tweets } from '~/pages';
-import { Home, Tweets } from '~/pages';
+import { Splash, Home, Profile, Tweets } from '~/pages';
 
 const AppNavigator = createStackNavigator(
-  { Home, Tweets },
+  { Splash, Home, Tweets, Profile },
   { headerMode: 'none', transitionConfig }
 );
 

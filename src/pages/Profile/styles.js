@@ -1,43 +1,45 @@
 import styled from 'styled-components/native';
 import { Animated } from 'react-native';
 
-import { colors } from '~/styles';
+import { metrics } from '~/styles';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
-  background-color: ${colors.primary};
+  background-color: ${props => props.theme.primary};
 `;
 
 export const InformationContainer = styled.View`
-  padding: 16px;
+  flex: 1;
+  padding: ${metrics.basePadding}px;
 `;
 
 export const TextName = styled.Text`
   font-weight: bold;
-  font-size: 22px;
+  font-size: ${metrics.extraLargeFont}px;
+  color: ${props => props.theme.contrast};
 `;
 
 export const TextUsername = styled.Text`
-  font-size: 16px;
-  color: gray;
+  font-size: ${metrics.mediumFont}px;
+  color: ${props => props.theme.hint};
 `;
 
 export const TextDescription = styled(TextUsername)`
-  margin-top: 8px;
-  color: black;
+  margin-top: ${metrics.baseMargin / 2}px;
+  color: ${props => props.theme.contrast};
 `;
 
 export const TextSmallInfo = styled.Text`
   font-weight: ${props => (props.strong ? 'bold' : 'normal')};
-  font-size: 14px;
-  color: ${props => (props.strong ? 'black' : 'gray')};
+  font-size: ${metrics.smallFont}px;
+  color: ${props => (props.strong ? props.theme.contrast : props.theme.hint)};
 `;
 
 export const ArrowContainer = styled.TouchableOpacity`
   position: absolute;
   top: 32;
   left: 16;
-  background-color: ${colors.transparentDark};
+  background-color: ${props => props.theme.transparentDark};
   width: 30px;
   height: 30px;
   border-radius: 15px;
@@ -58,11 +60,10 @@ const ContainerTextBottom = styled.View`
   position: absolute;
 `;
 
-export const TitleBottom = styled.Text`
-  font-size: 14px;
+const TitleBottom = styled.Text`
   font-weight: bold;
   text-align: center;
-  color: ${colors.primary};
+  /* color: ${props => props.theme.primary}; */
 `;
 
 export const ScrollView = styled.ScrollView`
@@ -70,10 +71,10 @@ export const ScrollView = styled.ScrollView`
 `;
 
 const AvatarImage = styled.Image`
-  border-color: ${colors.primary};
+  border-color: ${props => props.theme.primary};
   border-width: 3;
   /* overflow: hidden; */
-  margin-left: 16px;
+  margin-left: ${metrics.baseMargin}px;
 `;
 
 export const ContentRow = styled.View`
@@ -81,8 +82,30 @@ export const ContentRow = styled.View`
   margin-top: 8px;
 `;
 
+export const ContentRowEnd = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
 export const ContentMarginRight = styled.View`
-  margin-right: 8px;
+  margin-right: ${metrics.baseMargin / 2}px;
+`;
+
+export const ButtonFollow = styled.TouchableOpacity`
+  padding: ${metrics.baseMargin / 2}px;
+  border-radius: 20px;
+  border-width: 2px;
+  border-color: ${props => props.theme.accent};
+  width: 96px;
+  height: 40px;
+  align-items: center;
+  margin-top: -48px;
+`;
+
+export const TextButton = styled.Text`
+  color: ${props => props.theme.accent};
+  font-size: ${metrics.mediumFont}px;
 `;
 
 export const HeaderScrollableAnimated = Animated.createAnimatedComponent(
@@ -95,4 +118,8 @@ export const ContainerTextBottomAnimated = Animated.createAnimatedComponent(
 
 export const AvatarImageAnimated = Animated.createAnimatedComponent(
   AvatarImage
+);
+
+export const TitleBottomAnimated = Animated.createAnimatedComponent(
+  TitleBottom
 );

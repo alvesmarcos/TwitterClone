@@ -1,5 +1,6 @@
 import Home from './Home';
 import Profile from './Profile';
 import Tweets from './Tweets';
+import Splash from './Splash';
 
-export { Home, Profile, Tweets };
+export { Splash, Home, Profile, Tweets };

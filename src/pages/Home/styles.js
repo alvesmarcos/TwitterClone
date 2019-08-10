@@ -1,6 +1,8 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+import { metrics } from '~/styles';
+
+export const Container = styled.SafeAreaView`
   flex: 1;
   background-color: ${props => props.theme.primaryDark};
 `;
@@ -15,7 +17,7 @@ export const HeaderList = styled.View`
 
 export const TrendHeader = styled.Text`
   font-weight: bold;
-  color: white;
-  font-size: 18px;
-  margin: 8px 16px;
+  color: ${props => props.theme.contrast};
+  font-size: ${metrics.largeFont}px;
+  margin: ${metrics.basePadding / 2}px ${metrics.basePadding}px;
 `;

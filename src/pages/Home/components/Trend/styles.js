@@ -13,7 +13,7 @@ export const TextRank = styled.Text`
 
 export const TextName = styled.Text`
   font-weight: bold;
-  color: white;
+  color: ${props => props.theme.contrast};
   font-size: 16px;
 `;
 

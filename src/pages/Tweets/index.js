@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, useMemo } from 'react';
 import { FlatList, StatusBar } from 'react-native';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components/native';
 
-import { reqGetTweets, setTweetTopic } from '~/store/modules/tweets/actions';
-import { setUserData } from '~/store/modules/user/actions';
 import {
   Toolbar,
   TouchableSearchBar,
@@ -14,7 +12,8 @@ import {
   HorizontalSeparator,
   ModalSearch,
 } from '~/components';
-import { colors } from '~/styles';
+import { reqGetTweets, setTweetTopic } from '~/store/modules/tweets/actions';
+import { setUserData } from '~/store/modules/user/actions';
 import { Container, Button } from './styles';
 
 const propTypes = {
@@ -26,17 +25,24 @@ const propTypes = {
 
 function Tweets({ navigation }) {
   // states
+
   const [modalVisible, setModalVisible] = useState(false);
-  // connect with reducer using hooks ♥
+
+  // redux vars ♥
+
   const dispatch = useDispatch();
   const theme = useSelector(state => state.themeReducer.mode);
   const topic = useSelector(state => state.tweetsReducer.topic);
   const tweets = useSelector(state => state.tweetsReducer.data);
   const loading = useSelector(state => state.tweetsReducer.loading);
 
+  // lifecycle functions
+
   useEffect(() => {
     dispatch(reqGetTweets(topic));
   }, []);
+
+  // functions
 
   function keyExtractor(_, index) {
     return index.toString();
@@ -87,12 +93,31 @@ function Tweets({ navigation }) {
     );
   }
 
+  function renderList() {
+    return (
+      <FlatList
+        data={tweets}
+        keyExtractor={keyExtractor}
+        renderItem={renderTweet}
+        ItemSeparatorComponent={HorizontalSeparator}
+        refreshing={loading}
+        onRefresh={reloadTweets}
+      />
+    );
+  }
+
+  // hooks to re-render only when necessary
+
+  const FlatListTweets = useMemo(() => renderList(), [tweets]);
+
+  // render
+
   return (
     <ThemeProvider theme={theme}>
       <Container>
         <StatusBar
-          backgroundColor={theme.primaryDark}
-          barStyle="dark-content"
+          backgroundColor={theme.statusBarColor}
+          barStyle={theme.barStyle}
         />
         <Toolbar>
           <Button onPress={handleBack}>
@@ -115,14 +140,7 @@ function Tweets({ navigation }) {
             color={theme.accent}
           />
         </Toolbar>
-        <FlatList
-          data={tweets}
-          keyExtractor={keyExtractor}
-          renderItem={renderTweet}
-          ItemSeparatorComponent={HorizontalSeparator}
-          refreshing={loading}
-          onRefresh={reloadTweets}
-        />
+        {FlatListTweets}
         <ModalSearch
           visible={modalVisible}
           handleDismiss={onDismissModal}
