@@ -1,5 +1,5 @@
 import { Types } from './reducer';
 
-export function setTheme(colors) {
-  return { type: Types.SET_THEME_COLOR, payload: colors };
+export function setLightTheme(isLight) {
+  return { type: Types.CHANGE_THEME_MODE, payload: isLight };
 }

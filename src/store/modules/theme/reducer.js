@@ -3,18 +3,20 @@ import produce from 'immer';
 import { colors } from '~/styles';
 
 export const Types = {
-  SET_THEME_COLOR: '@theme/SET_THEME_COLOR',
+  CHANGE_THEME_MODE: '@theme/CHANGE_THEME_MODE',
 };
 
 const INITIAL_STATE = {
-  mode: colors.dark,
+  mode: colors.light,
+  isLight: true,
 };
 
 export default function themeReducer(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     switch (action.type) {
-      case Types.SET_THEME_COLOR: {
-        draft.mode = action.payload;
+      case Types.CHANGE_THEME_MODE: {
+        draft.isLight = action.payload;
+        draft.mode = action.payload ? colors.light : colors.dark;
         break;
       }
       default:
