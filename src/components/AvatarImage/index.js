@@ -5,12 +5,11 @@ import { Container, Image } from './styles';
 
 const propTypes = {
   imgSrc: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  size: PropTypes.number,
+  size: PropTypes.number.isRequired,
   isRemote: PropTypes.bool,
 };
 
 const defaultProps = {
-  size: 40,
   isRemote: false,
 };
 

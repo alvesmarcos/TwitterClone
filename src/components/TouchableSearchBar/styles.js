@@ -1,5 +1,7 @@
 import styled from 'styled-components/native';
 
+import { metrics } from '~/styles';
+
 export const Container = styled.TouchableWithoutFeedback`
   flex: 1;
 `;
@@ -9,16 +11,16 @@ export const ContentSearchBar = styled.View`
   justify-content: center;
   align-items: center;
   background-color: ${props => props.theme.primaryDark};
-  padding: 0px 8px 0px 8px;
-  height: 36;
+  padding: 0px ${metrics.basePadding / 2}px;
+  height: 36px;
   flex-direction: row;
   border-radius: 18px;
   align-items: center;
-  margin: 0px 16px 0px 16px;
+  margin: 0px ${metrics.basePadding}px;
 `;
 
 export const PlaceholderSearch = styled.Text`
-  margin-left: 8px;
-  font-size: 16px;
+  margin-left: ${metrics.basePadding / 2}px;
+  font-size: ${metrics.mediumFont}px;
   color: ${props => props.color};
 `;

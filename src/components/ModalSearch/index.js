@@ -22,10 +22,12 @@ const propTypes = {
 };
 
 function ModalSearch({ handleDismiss, handleSubmit, visible }) {
-  const theme = useSelector(state => state.themeReducer.mode);
-  // connect using hooks ♥
-  const topic = useSelector(state => state.tweetsReducer.topic);
+  // redux vars ♥
   const dispatch = useDispatch();
+  const topic = useSelector(state => state.tweetsReducer.topic);
+  const theme = useSelector(state => state.themeReducer.mode);
+
+  // functions
 
   function clearTopic() {
     dispatch(setTweetTopic(''));
@@ -36,9 +38,11 @@ function ModalSearch({ handleDismiss, handleSubmit, visible }) {
   }
 
   function onSubmit() {
-    handleSubmit();
     handleDismiss();
+    handleSubmit();
   }
+
+  // render
 
   return (
     <CustomModal
@@ -64,16 +68,14 @@ function ModalSearch({ handleDismiss, handleSubmit, visible }) {
               onSubmitEditing={onSubmit}
               autoFocus
             />
-            {topic.length !== 0 && (
-              <RoundButton onPress={clearTopic}>
-                <IconWrapper
-                  type="Ionicons"
-                  name="ios-close"
-                  size={20}
-                  color="white"
-                />
-              </RoundButton>
-            )}
+            <RoundButton onPress={clearTopic}>
+              <IconWrapper
+                type="Ionicons"
+                name="ios-close"
+                size={16}
+                color="white"
+              />
+            </RoundButton>
           </SearchContainer>
           <TextBack onPress={handleDismiss}>Cancel</TextBack>
         </Toolbar>

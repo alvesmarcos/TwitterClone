@@ -1,8 +1,10 @@
 import styled from 'styled-components/native';
 
+import { metrics } from '~/styles';
+
 export const Container = styled.View`
-  height: 54px;
-  padding: 4px 16px;
+  height: ${metrics.toolbarHeight}px;
+  padding: ${metrics.basePadding / 4}px ${metrics.basePadding}px;
   background-color: ${props => props.theme.primary};
   flex-direction: row;
   justify-content: space-between;

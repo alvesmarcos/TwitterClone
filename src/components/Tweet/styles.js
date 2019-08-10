@@ -1,15 +1,17 @@
 import styled from 'styled-components/native';
 
+import { metrics } from '~/styles';
+
 export const Container = styled.TouchableOpacity`
   background-color: ${props => props.theme.primary};
-  padding: 16px;
+  padding: ${metrics.basePadding}px;
   flex-direction: row;
 `;
 
 export const Content = styled.View`
   flex: 1;
   flex-direction: column;
-  padding-left: 8px;
+  padding-left: ${metrics.basePadding / 2}px;
 `;
 
 export const ContentRow = styled.View`
@@ -23,19 +25,19 @@ export const ContentColumn = styled.View`
 `;
 
 export const Text = styled.Text`
-  font-size: 16px;
+  font-size: ${metrics.mediumFont}px;
   color: ${props => props.color};
   font-weight: ${props => (props.weight ? props.weight : 'normal')};
 `;
 
 export const ActionContainer = styled.View`
   flex-direction: row;
-  margin-top: 8px;
+  margin-top: ${metrics.baseMargin / 2}px;
   justify-content: space-between;
-  padding-right: 32px;
+  padding-right: ${metrics.basePadding * 2}px;
 `;
 
 export const TextCount = styled.Text`
-  margin-left: 4px;
+  margin-left: ${metrics.baseMargin / 4}px;
   color: ${props => props.theme.hint};
 `;

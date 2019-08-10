@@ -1,7 +1,0 @@
-1. Finish profile
-2. Set metrics/consts
-3. Review code
-4. Build iOS
-5. Splash Animated
-6. Dark theme
-7. Recent researched

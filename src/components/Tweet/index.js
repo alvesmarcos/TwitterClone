@@ -46,7 +46,22 @@ function Tweet({
   retweetCount,
   ...rest
 }) {
+  // redux vars
+
   const theme = useSelector(state => state.themeReducer.mode);
+
+  // vars
+
+  const replyCountFormatted = replyCount ? formatNumberVolume(replyCount) : '';
+  const retweetCountFormatted = retweetCount
+    ? formatNumberVolume(retweetCount)
+    : '';
+  const favoriteCountFormatted = favoriteCount
+    ? formatNumberVolume(favoriteCount)
+    : '';
+  const dateFormatted = format(date, 'MMM D');
+
+  // render
 
   return (
     <Container {...rest}>
@@ -56,8 +71,11 @@ function Tweet({
           <Text color={theme.contrast} weight="bold">
             {name}
           </Text>
-          <Text color={theme.hint}>{` @${username}`}</Text>
-          <Text color={theme.hint}>{` • ${format(date, 'MMM D')}`}</Text>
+          <Text color={theme.hint} numberOfLines={1}>{` @${username}`}</Text>
+          <Text
+            color={theme.hint}
+            numberOfLines={1}
+          >{` • ${dateFormatted}`}</Text>
         </ContentRow>
         {replyName && (
           <ContentColumn>
@@ -78,9 +96,7 @@ function Tweet({
               size={25}
               color={theme.hint}
             />
-            <TextCount>
-              {replyCount ? formatNumberVolume(replyCount) : ''}
-            </TextCount>
+            <TextCount>{replyCountFormatted}</TextCount>
           </ContentRow>
           <ContentRow>
             <IconWrapper
@@ -89,9 +105,7 @@ function Tweet({
               size={25}
               color={theme.hint}
             />
-            <TextCount>
-              {retweetCount ? formatNumberVolume(retweetCount) : ''}
-            </TextCount>
+            <TextCount>{retweetCountFormatted}</TextCount>
           </ContentRow>
           <ContentRow>
             <IconWrapper
@@ -100,9 +114,7 @@ function Tweet({
               size={25}
               color={theme.hint}
             />
-            <TextCount>
-              {favoriteCount ? formatNumberVolume(favoriteCount) : ''}
-            </TextCount>
+            <TextCount>{favoriteCountFormatted}</TextCount>
           </ContentRow>
           <ContentRow>
             <IconWrapper
