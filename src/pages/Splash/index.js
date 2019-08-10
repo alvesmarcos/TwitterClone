@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Animated, Easing } from 'react-native';
+import { Animated, Easing, StatusBar } from 'react-native';
 import PropTypes from 'prop-types';
 import { StackActions, NavigationActions } from 'react-navigation';
 
 import { AnimatedContainer, AnimatedIcon } from './styles';
+import { colors } from '~/styles';
 
 const propTypes = {
   navigation: PropTypes.shape({
@@ -51,6 +52,10 @@ function Splash({ navigation }) {
 
   return (
     <AnimatedContainer style={{ opacity: opacityAnim }}>
+      <StatusBar
+        backgroundColor={colors.light.accent}
+        barStyle="light-content"
+      />
       <AnimatedIcon
         size={60}
         color="white"

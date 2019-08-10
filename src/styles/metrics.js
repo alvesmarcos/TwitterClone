@@ -1,4 +1,4 @@
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -25,6 +25,7 @@ const sizes = {
   profileImageMaxHeight: 80,
   profileImageMinHeight: 40,
   toolbarHeight: 54,
+  profileImageMargin: Platform.OS === 'ios' ? 26 : 2,
 };
 
 export default { ...fonts, ...space, ...screen, ...sizes };

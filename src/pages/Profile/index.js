@@ -64,7 +64,8 @@ function Profile({ navigation }) {
   const profileImageMarginTop = scrollOffset.interpolate({
     inputRange: [0, metrics.headerMaxHeight - metrics.headerMinHeight],
     outputRange: [
-      metrics.headerMaxHeight - (metrics.profileImageMaxHeight + 26) / 2,
+      metrics.headerMaxHeight -
+        (metrics.profileImageMaxHeight + metrics.profileImageMargin) / 2,
       metrics.headerMaxHeight + 5,
     ],
     extrapolate: 'clamp',
